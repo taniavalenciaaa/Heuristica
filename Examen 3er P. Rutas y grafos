@@ -1,0 +1,41 @@
+import networkx as nx
+
+def encontrar_camino_anchura(graph, start, end):
+    try:
+
+        edges = nx.dfs_edges(graph, source=start)
+        path = [start]
+        for u, v in edges:
+            path.append(v)
+            if v == end:
+                break
+        return path
+    except nx.NetworkXNoPath:
+        return None
+
+
+G = nx.DiGraph()
+G.add_nodes_from([str(i) for i in range(1,12)])
+G.add_edges_from([("1","2"),("1","3"),
+                  ("2","1"),("2","4"),("2","12"),
+                  ("3","1"),("3","8"),
+                  ("4","2"),("4","5"),("4","10"),
+                  ("5","4"),("5","6"),("5","12"),
+                  ("6","5"),("6","9"),
+                  ("7","8"),("7","11"), 
+                  ("8","3"),("8","7"),
+                  ("9","6"),("9","10"),
+                  ("10","4"),("10","9"),
+                  ("11","7"),("11","12"),
+                  ("12","2"),("12","5"),("12","11"),])
+
+inicio = "1"
+fin = "12"
+camino_anchura = encontrar_camino_anchura(G, inicio, fin)
+
+
+print("\nCamino encontrado usando búsqueda en anchura:")
+if camino_anchura:
+    print(" -> ".join(camino_anchura))
+else:
+    print("No se encontró camino")
